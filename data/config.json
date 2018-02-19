@@ -1,0 +1,4 @@
+{
+  "LOG_FILE": "log.txt",
+  "DATA_BACKEND": "datastore"
+}
