@@ -23,15 +23,21 @@ function write_file(text) {
   });
 }
 
-function add_timestamp(timestamp, entry) {
-  write_file(util.format("* %s : %s\n", timestamp, entry))
+function add_timestamp(timestamp) {
+  write_file(util.format("* %s : %s\n", timestamp.time, timestamp.entry))
 }
 
-function add_note(timestamp, entry) {
-  write_file(util.format("  * %s\n", entry))
+function add_note(note) {
+  write_file(util.format("  * %s\n", note.entry))
+}
+
+function get_lines(){
+  return String(fs.readFileSync(PATH)).split('\n');
+
 }
 
 module.exports = {
   add_timestamp,
-  add_note
+  add_note,
+  get_lines
 }
