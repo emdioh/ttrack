@@ -16,3 +16,9 @@ class Day  {
     this.day = day;
   }
 }
+
+module.exports = {
+    TimestampEntry,
+    TimestampNote,
+    Day
+}

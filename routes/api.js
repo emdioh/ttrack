@@ -26,7 +26,7 @@ router.use(function(req, res, next) {
 
   // do logging
   console.log('Something is happening.');
-  console.log(req)
+  //console.log(req)
   next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -42,9 +42,11 @@ router.get('/lines', (req, res) => {
 router.post('/timestamp', (req, res) => {
   var ts = new ts_entry.TimestampEntry(req.body.timestamp, req.body.value);
   serializer.add_timestamp(ts);
+  res.json({result: 'ok'})
 })
 
 router.post('/note', (req, res) => {
   var ts = new ts_entry.TimestampNote(req.body.value);
   serializer.add_note(ts);
+  res.json({result: 'ok'})
 })
