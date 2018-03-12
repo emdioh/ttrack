@@ -45,7 +45,13 @@ function fail(res, code, message){
 // POST /api/note create a new note
 
 router.get('/lines', (req, res) => {
-  res.json({lines: serializer.get_lines()})
+  console.log('get_all')
+  res.json({lines: serializer.get_lines(0)});
+});
+
+router.get('/lines:N', (req, res) => {
+  count = req.params.N.substr(1);
+  res.json({lines: serializer.get_lines(count)});
 });
 
 router.post('/timestamp', (req, res) => {

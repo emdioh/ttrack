@@ -49,9 +49,15 @@ function add_note(note) {
   write_file(util.format("  * %s\n", note.entry))
 }
 
-function get_lines(){
-  return String(fs.readFileSync(PATH)).split('\n');
-
+function get_lines(count){
+  lines = String(fs.readFileSync(PATH)).split('\n');
+  console.log("Count is " + count)
+  if (count > 0){
+    console.log(count);
+    start = Math.max(0, lines.length-count);
+    return lines.slice(start, lines.length);
+  }
+  return lines;
 }
 
 module.exports = {
