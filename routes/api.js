@@ -40,12 +40,26 @@ router.get('/lines', (req, res) => {
 });
 
 router.post('/timestamp', (req, res) => {
+  if (!req.body.timestamp){
+    console.log('Timestamp is null!');
+    res.status(400);
+    res.json({result: 'ko',
+              message: 'Invalid request. "timestamp" cannot be empty'});
+    return;
+  }
   var ts = new ts_entry.TimestampEntry(req.body.timestamp, req.body.value);
   serializer.add_timestamp(ts);
   res.json({result: 'ok'})
 })
 
 router.post('/note', (req, res) => {
+  if (!req.body.value){
+    console.log('Value is null!');
+    res.status(400);
+    res.json({result: 'ko',
+              message: 'Invalid request. "value" cannot be empty'});
+    return;
+  }
   var ts = new ts_entry.TimestampNote(req.body.value);
   serializer.add_note(ts);
   res.json({result: 'ok'})
