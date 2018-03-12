@@ -23,8 +23,26 @@ function write_file(text) {
   });
 }
 
+function check_today(today){
+    lines = get_lines();
+    date_re = /^(#\s)*(\d{4}-\d{2}-\d{2})$/;
+    for(var i=lines.length-1; i>=0; i--){
+      l = lines[i];
+      m = l.match(date_re);
+      console.log(m);
+      if (m){
+        return m[2] == today;
+      }
+    }
+}
+
 function add_timestamp(timestamp) {
-  write_file(util.format("* %s : %s\n", timestamp.time, timestamp.entry))
+  ts_day = timestamp.time.format('YYYY-MM-DD');
+  ts_time = timestamp.time.format('hh:mm');
+  if (!check_today(ts_day)){
+    write_file(util.format("\n# %s\n", ts_day))
+  }
+  write_file(util.format("* %s : %s\n", ts_time, timestamp.entry))
 }
 
 function add_note(note) {
