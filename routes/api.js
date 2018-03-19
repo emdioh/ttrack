@@ -17,7 +17,9 @@ var ts_entry = require('../model/ts_entry');
  * Just be happy.
  */
 router.get('/', (req, res) => {
-  res.json({message:"HoooooWhooo"})
+  res.json({
+    message: "HoooooWhooo"
+  })
 });
 
 // middleware to use for all requests
@@ -30,13 +32,12 @@ router.use(function(req, res, next) {
   next(); // make sure we go to the next routes and don't stop here
 });
 
-function fail(res, code, message){
+function fail(res, code, message) {
   res.status(code);
-  res.json(
-    {
-      result: 'ko',
-      message: message
-    });
+  res.json({
+    result: 'ko',
+    message: message
+  });
 }
 
 // GET /api/lines: get all the lines
@@ -46,38 +47,46 @@ function fail(res, code, message){
 
 router.get('/lines', (req, res) => {
   console.log('get_all')
-  res.json({lines: serializer.get_lines(0)});
+  res.json({
+    lines: serializer.get_lines(0)
+  });
 });
 
 router.get('/lines:N', (req, res) => {
   count = req.params.N.substr(1);
-  res.json({lines: serializer.get_lines(count)});
+  res.json({
+    lines: serializer.get_lines(count)
+  });
 });
 
 router.post('/timestamp', (req, res) => {
-  if (!req.body.timestamp){
+  if (!req.body.timestamp) {
     console.log('Timestamp is null!');
     fail(res, 400, 'Invalid request. "timestamp" cannot be empty')
     return;
   }
   tstamp = moment(req.body.timestamp);
-  if (!tstamp.isValid()){
+  if (!tstamp.isValid()) {
     console.log('Timestamp is invalid!');
     fail(res, 400, 'Invalid request. "timestamp" is not valid!')
     return;
   }
   var ts = new ts_entry.TimestampEntry(tstamp, req.body.value);
   serializer.add_timestamp(ts);
-  res.json({result: 'ok'})
+  res.json({
+    result: 'ok'
+  })
 })
 
 router.post('/note', (req, res) => {
-  if (!req.body.value){
+  if (!req.body.value) {
     console.log('Value is null!');
     fail(res, 400, 'Invalid request. "value" cannot be empty');
     return;
   }
   var ts = new ts_entry.TimestampNote(req.body.value);
   serializer.add_note(ts);
-  res.json({result: 'ok'})
+  res.json({
+    result: 'ok'
+  })
 })
